@@ -84,7 +84,7 @@ void solvePoisson(
     cout << "Ran for " << i << " iterations\n";
 
 #ifdef TERMONTOL
-    printf("Final L1-Delta: %.8fl\n", l1_delta);
+    printf("Final L1-Delta: %.8f\n", l1_delta);
 #endif
 }
 
@@ -94,7 +94,7 @@ void poissonKernel(
     vector<vector<double> >const& b,
     const double dx, const double dy
 ) {
-    #pragma omp parallel for default(none) shared(p, pn, b) firstprivate(dx, dy)
+    #pragma omp parallel for default(none) shared(p, pn, b) firstprivate(dx, dy) collapse(2)
     for (int i = 1; i < p.size() - 1; i++) {
         for (int j = 1; j < p[0].size() - 1; j++) {
             p[i][j] = (
@@ -123,7 +123,7 @@ double l1Delta(vector<vector<double> > const& p, vector<vector<double> > const& 
     double diffSum = 0;
     double nSum = 0;
 
-    #pragma omp parallel for default(none) shared(p, pn) reduction(+:diffSum, nSum)
+    #pragma omp parallel for default(none) shared(p, pn) reduction(+:diffSum, nSum) collapse(2)
     for (int i = 0; i < p.size(); i++) {
         for (int j = 0; j < p[0].size(); j++) {
             diffSum += abs(p[i][j]) - abs(pn[i][j]);

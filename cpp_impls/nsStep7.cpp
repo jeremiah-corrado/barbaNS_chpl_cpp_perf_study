@@ -44,7 +44,7 @@ int main(int argc, const char *argv[]) {
     for (int n = 0; n < nt; n++) {
         u.swap(un);
 
-        #pragma omp parallel for default(none) shared(u, un) firstprivate(nx, ny, dx, dy, nu, dt)
+        #pragma omp parallel for default(none) shared(u, un) firstprivate(nx, ny, dx, dy, nu, dt) collapse(2)
         for (int i = 1; i < nx - 1; i++) {
             for (int j = 1; j < ny - 1; j++) {
                 u[i][j] = un[i][j] +
