@@ -1,7 +1,7 @@
 echo "Builing..."
 
-cd ./chpl_impls && bash build.bash
-cd ../cpp_impls && bash build.bash
+cd ./chpl_impls && bash build.bash "release"
+cd ../cpp_impls && bash build.bash "release"
 cd ../
 
 export OMP_NUM_THREADS=8

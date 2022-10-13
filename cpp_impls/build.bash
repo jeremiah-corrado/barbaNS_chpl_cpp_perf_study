@@ -1,10 +1,13 @@
+if [[ $# -eq 0 ]]; then
+    echo "building cpp source ..."
+    cd ./build
 
-cd ./build
+    export BUILDFORTEST=true
+    cmake -DCMAKE_BUILD_TYPE=Debug .. && make
+else
+    echo "building cpp source in Release mode ..."
+    cd ./release
 
-export BUILDFORTEST=true
-cmake -DCMAKE_BUILD_TYPE=Debug .. && make
-
-cd ../release
-
-unset BUILDFORTEST
-cmake -DCMAKE_BUILD_TYPE=Release .. && make
+    unset BUILDFORTEST
+    cmake -DCMAKE_BUILD_TYPE=Release .. && make
+fi
