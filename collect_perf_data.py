@@ -1,7 +1,7 @@
 import os
 
 size_scale_factor = 16
-samples_per_experiment = 25
+samples_per_experiment = 1
 test_files = ["nsStep7", "nsStep89"]
 
 problem_sizes = [
@@ -32,5 +32,5 @@ for test_file in test_files:
             print("Running '", exp_name, "'...")
 
             for s in range(0, samples_per_experiment):
-                os.system("/usr/bin/time -a -o ./dat/{}_cpp.txt ./cpp_impls/release/{} {} > /dev/null".format(exp_name, test_file, args))
-                os.system("/usr/bin/time -a -o ./dat/{}_chpl.txt ./chpl_impls/release/{} {} > /dev/null".format(exp_name, test_file, args))
+                os.system("/usr/bin/time -f 'real %e user %U sys %S' -a -o ./dat/{}_cpp.txt ./cpp_impls/release/{} {} > /dev/null".format(exp_name, test_file, args))
+                os.system("/usr/bin/time -f 'real %e user %U sys %S' -a -o ./dat/{}_chpl.txt ./chpl_impls/release/{} {} > /dev/null".format(exp_name, test_file, args))

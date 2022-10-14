@@ -62,20 +62,34 @@ int main(int argc, const char *argv[]) {
 
     // compute the standard deviation of 'u'
     double m_sum = 0.0;
-    #pragma omp parallel for default(none) shared(u) reduction(+:m_sum)
-    for (auto const& row : u) {
-        for (auto val: row) {
-            m_sum += val;
+    // #pragma omp parallel for default(none) shared(u) reduction(+:m_sum)
+    // for (auto const& row : u) {
+    //     for (auto val: row) {
+    //         m_sum += val;
+    //     }
+    // }
+    #pragma omp parallel for default(none) shared(u) collapse(2) reduction(+:m_sum)
+    for (int i = 0; i < u.size(); i++) {
+        for (int j = 0; j < u[0].size(); j++) {
+            m_sum += u[i][j];
         }
     }
+
     double mean = m_sum / (nx * ny);
     double std_sum = 0.0;
-    #pragma omp parallel for default(none) shared(u) firstprivate(mean) reduction(+:std_sum)
-    for (auto const& row : u) {
-        for (auto val: row) {
-            std_sum += pow(val - mean, 2);
+    // #pragma omp parallel for default(none) shared(u) firstprivate(mean) reduction(+:std_sum)
+    // for (auto const& row : u) {
+    //     for (auto val: row) {
+    //         std_sum += pow(val - mean, 2);
+    //     }
+    // }
+    #pragma omp parallel for default(none) shared(u) firstprivate(mean) collapse(2) reduction(+:std_sum)
+    for (int i = 0; i < u.size(); i++) {
+        for (int j = 0; j < u[0].size(); j++) {
+            std_sum += pow(u[i][j] - mean, 2);
         }
     }
+
     double std_dev = pow(std_sum, 0.5) / (nx * ny);
     printf("Final std(u): %.6lf\n", std_dev);
 
