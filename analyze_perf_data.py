@@ -1,14 +1,6 @@
 import os
 import re
-import matplotlib
 import matplotlib.pyplot as plt
-
-# problem_sizes = [
-#     [512, 512], [1024, 1024], [2048, 2048], [4096, 4096],
-#     [64, 512], [128, 2048], [256, 4096],
-#     [512, 64], [2048, 128], [4096, 256]
-# ]
-# num_procs = [2, 4, 8, 16]
 
 test_files = ["nsStep7", "nsStep89"]
 weak_scaling_sizes = [[256, 256], [512, 512], [1024, 1024]]
@@ -79,6 +71,7 @@ for test_file in test_files:
             print('\t\tuser: {0:0.5f} \t {0:0.5f}'.format(means[1], stds[1]))
             print('\t\tsys:  {0:0.5f} \t {0:0.5f}'.format(means[2], stds[2]))
 
+            # only storing walltimes for now
             strong_runtimes[exp_key][lang][str(np)] = means[0]
             strong_variances[exp_key][lang][str(np)] = stds[0]
             strong_counts[exp_key].append(cnt)
