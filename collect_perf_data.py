@@ -4,12 +4,15 @@ size_scale_factor = 16
 samples_per_experiment = 25
 test_files = ["nsStep7", "nsStep89"]
 
-problem_sizes = [
-    [1024, 1024], [2048, 2048], [4096, 4096],
-    [128, 2048], [256, 4096],
-    [2048, 128], [4096, 256]
-]
-num_procs = [2, 4, 8, 16, 32]
+# problem_sizes = [
+#     [1024, 1024], [2048, 2048], [4096, 4096],
+#     [128, 2048], [256, 4096],
+#     [2048, 128], [4096, 256]
+# ]
+problem_sizes = [[8192, 8192]]
+# num_procs = [2, 4, 8, 16, 32]
+num_procs = [8, 16, 32]
+
 
 os.environ["CHPL_RT_NUM_THREADS_PER_LOCALE_QUIET"]="yes"
 for test_file in test_files:
